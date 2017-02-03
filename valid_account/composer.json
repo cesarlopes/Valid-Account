@@ -1,0 +1,6 @@
+{
+    "require": {
+        "jansenfelipe/cpf-gratis": "^2.0",
+        "jansenfelipe/cnpj-gratis": "^2.0"
+    }
+}
