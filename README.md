@@ -28,4 +28,4 @@ Módulo desenvolvido por Luciano Zanita, membro e fundador da http://WHMCS.RED/
 
 
 # Considerações
-Use indique! :-)
+Use e indique aos seus amigos! :-)
