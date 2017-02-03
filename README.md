@@ -11,7 +11,7 @@ O Módulo tem de proposito integrar um sistema de verificação de CPF ou CNPJ c
 Para começar você deve ter 3 campos para validação:
 - CPF
 - Data de Nascimento
-- CNPJ
+- CNPJ <br/>
 Caso utilize campo único para CPF e CNPJ poderá usa-lo também, lembrando que para a consulta de CPF é necessário ter a Data de Nascimento preenchido na conta de cada cliente, o módulo possui mascará para o campo CPF, CNPJ e Data De Nascimento e para campo único de CPF e CNPJ também.
 Após ter criado os campos envie o valid-account para a pasta /modules/addons/
 E ative-o através do painel de módulos, ao entrar pela primeira vez, certifique de alterar as configurações colocando os campos correspondentes como CPF, CNPJ e Data de Nascimento, caso for campo único para CPF e CNPJ lembre-se de marcar o mesmo nas ambas seleções para CPF e CNPJ.
