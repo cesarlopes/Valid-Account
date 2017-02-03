@@ -3,9 +3,9 @@ O Valid Account trata-se de um módulo de WHMCS baseado em API com código Open 
 O Módulo tem de proposito integrar um sistema de verificação de CPF ou CNPJ como consulta pública a fim de verificar fraudes que podem haver em algum pedido feito no WHMCS, podendo assim validar de forma eficaz com a consulta.
 
 # Requisitos necessários para instalação
--PHP 5.6 ou maior
--PDO & Mysqli
--WHMCS 6.x ou superior
+- PHP 5.6 ou maior
+- WHMCS 6.x ou maior
+- PDO e Mysqli ativos
 
 # Como instalar
 Para começar você deve ter 3 campos para validação:
