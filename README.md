@@ -17,12 +17,12 @@ Após ter criado os campos envie o valid-account para a pasta /modules/addons/
 E ative-o através do painel de módulos, ao entrar pela primeira vez, certifique de alterar as configurações colocando os campos correspondentes como CPF, CNPJ e Data de Nascimento, caso for campo único para CPF e CNPJ lembre-se de marcar o mesmo nas ambas seleções para CPF e CNPJ.
 
 # Créditos e Códigos
-O Código de consulta para CPF e CNPJ são baseados nos códigos fontes desenvolvidos por jansenfelipe, você poderá conhecer cada código logo a baixo:
-https://github.com/jansenfelipe/cpf-gratis
+O Código de consulta para CPF e CNPJ são baseados nos códigos fontes desenvolvidos por jansenfelipe, você poderá conhecer cada código logo a baixo:<br/>
+https://github.com/jansenfelipe/cpf-gratis <br/>
 https://github.com/jansenfelipe/cnpj-gratis
 
-Os códigos de Mascará para campos foram baseados nos códigos de digitalBush, confira a baixo:
-https://github.com/digitalBush/jquery.maskedinput
+Os códigos de Mascará para campos foram baseados nos códigos de digitalBush, confira a baixo:<br/>
+https://github.com/digitalBush/jquery.maskedinput <br/>
 
 Módulo desenvolvido por Luciano Zanita, membro e fundador da http://WHMCS.RED/
 
