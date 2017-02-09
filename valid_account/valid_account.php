@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.1',
+    'version' => '0.2',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -79,6 +79,28 @@ $paramscnpj = CnpjGratis::getParams();
 
     //Linguagem
     $LANG = $vars['_lang'];
+
+    //URL Do Sistema
+    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] =='on') {
+    	//caso for https
+    	$urlsistema = "https://".$_SERVER['HTTP_HOST']."";
+	}
+	else{
+		$urlsistema = "http://".$_SERVER['HTTP_HOST']."";
+	}
+
+    //Salvando informações de configuração
+	if($_GET['config']=='salvar'){
+		try{
+			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],]);
+		    //Sucesso em salvar
+		    echo '<div class="alert alert-success">'.$LANG["alertasalvar"].'</div>';
+		}
+		//Caso não conseguir, exibirá o erro
+		catch (\Exception $e){
+			echo '<div class="alert alert-danger">'.$LANG["alertasalvarerro"].' {$e->getMessage()}</div>';
+		}
+	}
 
     //Pegando informações da tabela do módulo.
 	/** @var stdClass $cvallid */
@@ -214,19 +236,6 @@ $paramscnpj = CnpjGratis::getParams();
 			header('Location: addonmodules.php?module=valid_account&erro=3');
 		}
     }
-
-	//Salvando informações de configuração
-	if($_GET['config']=='salvar'){
-		try{
-			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],]);
-		    //Sucesso em salvar
-		    echo '<div class="alert alert-success">'.$LANG["alertasalvar"].'</div>';
-		}
-		//Caso não conseguir, exibirá o erro
-		catch (\Exception $e){
-			echo '<div class="alert alert-danger">'.$LANG["alertasalvarerro"].' {$e->getMessage()}</div>';
-		}
-	}
 
 	//Mensagens de Erro
 	if($_GET['erro']=='1'){
@@ -871,7 +880,7 @@ if($_GET['acao']=='consultar'){
     </div>
   </div>
 </div>
-<script type="text/javascript" src="/modules/addons/valid_account/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="<?=$urlsistema;?>/modules/addons/valid_account/jquery.maskedinput.min.js"></script>
 <script type="text/javascript">
 //Função de mudar Busca
 function mudarbusca(){

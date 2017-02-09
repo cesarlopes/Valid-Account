@@ -8,7 +8,15 @@ if (!defined("WHMCS"))
 	 die("Acesso restrito!");
 	}
 	//Cria o Hook
-	function valid_account($vars) {;
+	function valid_account($vars) {
+		//URL Do Sistema
+	    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] =='on') {
+	    	//caso for https
+	    	$urlsistema = "https://".$_SERVER['HTTP_HOST']."";
+		}
+		else{
+			$urlsistema = "http://".$_SERVER['HTTP_HOST']."";
+		}
 		//Pegando informações da tabela do módulo.
 		/** @var stdClass $cvallid */
 		foreach (Capsule::table('mod_validaccount')->get() as $cvallid){
@@ -19,7 +27,7 @@ if (!defined("WHMCS"))
 		//Criando o Javascript
 		$javascript  = '';
 		//Chamando o Jquery da Mascara
-		$javascript .= '<script type="text/javascript" src="/modules/addons/valid_account/jquery.maskedinput.min.js"></script>';
+		$javascript .= '<script type="text/javascript" src="'.$urlsistema.'/modules/addons/valid_account/jquery.maskedinput.min.js"></script>';
 		//Verifica se o campo é o mesmo do CPF X CNPJ
 		if($cpfcampo==$cnpjcampo){
 			//Chamando as mascaras
