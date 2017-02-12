@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.2',
+    'version' => '0.3',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -80,14 +80,11 @@ $paramscnpj = CnpjGratis::getParams();
     //Linguagem
     $LANG = $vars['_lang'];
 
-    //URL Do Sistema
-    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] =='on') {
-    	//caso for https
-    	$urlsistema = "https://".$_SERVER['HTTP_HOST']."";
-	}
-	else{
-		$urlsistema = "http://".$_SERVER['HTTP_HOST']."";
-	}
+    	//URL Do Sistema
+    	//Pegando URL do sistema no banco
+    	foreach (Capsule::table('tblconfiguration')->WHERE('setting', 'SystemURL')->get() as $system){
+	    	$urlsistema = $system->value;
+		}
 
     //Salvando informações de configuração
 	if($_GET['config']=='salvar'){
@@ -880,7 +877,7 @@ if($_GET['acao']=='consultar'){
     </div>
   </div>
 </div>
-<script type="text/javascript" src="<?=$urlsistema;?>/modules/addons/valid_account/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="<?=$urlsistema;?>modules/addons/valid_account/jquery.maskedinput.min.js"></script>
 <script type="text/javascript">
 //Função de mudar Busca
 function mudarbusca(){
