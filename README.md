@@ -4,7 +4,7 @@ O Módulo tem de proposito integrar um sistema de verificação de CPF ou CNPJ c
 
 # Requisitos necessários para instalação
 - PHP 5.6 ou maior
-- WHMCS 6.x ou maior
+- WHMCS 7.x ou superior
 - PDO e Mysqli ativos
 
 # Como instalar
