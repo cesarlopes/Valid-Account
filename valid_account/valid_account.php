@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.3',
+    'version' => '0.4',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -765,6 +765,8 @@ if($_GET['acao']=='consultar'){
         <a href="https://github.com/jansenfelipe/cnpj-gratis" target="_new">CNPJ Grátis</a><br/>
         <a href="https://github.com/jansenfelipe/cpf-gratis" target="_new">CPF Grátis</a><br/>
         <a href="https://github.com/digitalBush/jquery.maskedinput" target="_new">Masked Input Plugin for jQuery</a><br/>
+        <a href="https://github.com/tiagoporto/gerador-validador-cpf/" target="_new">Gerador e Validador de CPF</a></br>
+        <a href="http://www.geradorcnpj.com/javascript-validar-cnpj.htm" target="_new">Validação de CNPJ por geradorcnpj.com</a><br/>
       	<br/>
 
         <?=$LANG['explicacaocredito'];?></p>
@@ -877,7 +879,7 @@ if($_GET['acao']=='consultar'){
     </div>
   </div>
 </div>
-<script type="text/javascript" src="<?=$urlsistema;?>modules/addons/valid_account/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="<?=$urlsistema;?>modules/addons/valid_account/js/jquery.maskedinput.min.js"></script>
 <script type="text/javascript">
 //Função de mudar Busca
 function mudarbusca(){

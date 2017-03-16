@@ -316,17 +316,17 @@
     },
     {
         "name": "symfony/dom-crawler",
-        "version": "v2.8.16",
-        "version_normalized": "2.8.16.0",
+        "version": "v2.8.17",
+        "version_normalized": "2.8.17.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/dom-crawler.git",
-            "reference": "52cc211afa9458c0a54c478010a55f44892c1c02"
+            "reference": "6225d65e001b3f03f63d43e302a26314f8e1e6fe"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/52cc211afa9458c0a54c478010a55f44892c1c02",
-            "reference": "52cc211afa9458c0a54c478010a55f44892c1c02",
+            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/6225d65e001b3f03f63d43e302a26314f8e1e6fe",
+            "reference": "6225d65e001b3f03f63d43e302a26314f8e1e6fe",
             "shasum": ""
         },
         "require": {
@@ -339,7 +339,7 @@
         "suggest": {
             "symfony/css-selector": ""
         },
-        "time": "2017-01-02T20:30:24+00:00",
+        "time": "2017-01-21T16:40:50+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -374,8 +374,8 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v2.8.16",
-        "version_normalized": "2.8.16.0",
+        "version": "v2.8.17",
+        "version_normalized": "2.8.17.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
@@ -429,17 +429,17 @@
     },
     {
         "name": "symfony/browser-kit",
-        "version": "v2.8.16",
-        "version_normalized": "2.8.16.0",
+        "version": "v2.8.17",
+        "version_normalized": "2.8.17.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/browser-kit.git",
-            "reference": "d2a5de15c8341a470a66becf4597bc675686a72b"
+            "reference": "f8fd9fe2341e191111a97a295ac061b4be7f7aec"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/browser-kit/zipball/d2a5de15c8341a470a66becf4597bc675686a72b",
-            "reference": "d2a5de15c8341a470a66becf4597bc675686a72b",
+            "url": "https://api.github.com/repos/symfony/browser-kit/zipball/f8fd9fe2341e191111a97a295ac061b4be7f7aec",
+            "reference": "f8fd9fe2341e191111a97a295ac061b4be7f7aec",
             "shasum": ""
         },
         "require": {
@@ -453,7 +453,7 @@
         "suggest": {
             "symfony/process": ""
         },
-        "time": "2017-01-02T20:30:24+00:00",
+        "time": "2017-01-31T21:48:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
