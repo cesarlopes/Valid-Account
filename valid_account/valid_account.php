@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.4',
+    'version' => '0.5',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -764,7 +764,7 @@ if($_GET['acao']=='consultar'){
         <p><?=$LANG['creditostexto'];?><br/><br/>
         <a href="https://github.com/jansenfelipe/cnpj-gratis" target="_new">CNPJ Grátis</a><br/>
         <a href="https://github.com/jansenfelipe/cpf-gratis" target="_new">CPF Grátis</a><br/>
-        <a href="https://github.com/digitalBush/jquery.maskedinput" target="_new">Masked Input Plugin for jQuery</a><br/>
+        <a href="http://igorescobar.github.io/jQuery-Mask-Plugin/" target="_new">Jquery Mask Plugin</a><br/>
         <a href="https://github.com/tiagoporto/gerador-validador-cpf/" target="_new">Gerador e Validador de CPF</a></br>
         <a href="http://www.geradorcnpj.com/javascript-validar-cnpj.htm" target="_new">Validação de CNPJ por geradorcnpj.com</a><br/>
       	<br/>
@@ -879,7 +879,7 @@ if($_GET['acao']=='consultar'){
     </div>
   </div>
 </div>
-<script type="text/javascript" src="<?=$urlsistema;?>modules/addons/valid_account/js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="<?=$urlsistema;?>modules/addons/valid_account/js/jquery.mask.js"></script>
 <script type="text/javascript">
 //Função de mudar Busca
 function mudarbusca(){
@@ -911,9 +911,9 @@ function mudarbuscaavulsa(){
 
 //Formatação de Docuemnto
 jQuery(function($){
-   $("#cpf-avulso").mask("999.999.999-99");
-   $("#nascimento-avulso").mask("99/99/9999");
-   $("#cnpj-avulso").mask("99.999.999/9999-99");
+   $("#cpf-avulso").mask("000.000.000-00", {reverse: true});
+   $("#nascimento-avulso").mask("00/00/0000");
+   $("#cnpj-avulso").mask("00.000.000/0000-00", {reverse: true});
 });
 
 //Alteração do Captcha da Imagem

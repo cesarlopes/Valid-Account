@@ -40,17 +40,17 @@ if (!defined("WHMCS"))
 		//Script de validação de CNPJ
 		$javascript .= '<script type="text/javascript" src="'.$urlsistema.'modules/addons/valid_account/js/CNPJ.js"></script>';
 		//Chamando o Jquery da Mascara
-		$javascript .= '<script type="text/javascript" src="'.$urlsistema.'modules/addons/valid_account/js/jquery.maskedinput.min.js"></script>';
+		$javascript .= '<script type="text/javascript" src="'.$urlsistema.'modules/addons/valid_account/js/jquery.mask.js"></script>';
 		//Verifica se o campo é o mesmo do CPF X CNPJ
 		if($cpfcampo==$cnpjcampo){
 			//Chamando as mascaras
 			$javascript .= '<script type="text/javascript">jQuery(function($){ ';
 			//Data de Nascimento
-			$javascript .= '$("#customfield'.$nascimentocampo.'").mask("99/99/9999"); ';
+			$javascript .= '$("#customfield'.$nascimentocampo.'").mask("00/00/0000"); ';
 			//Fechando Jquery das mascaras
 			$javascript .= ' });</script>';
 			//CPF CNPj mesmo campo
-			$javascript .= '<script>jQuery(function($){$("#customfield'.$cpfcampo.'").focus(function(){$(this).unmask();$(this).val($(this).val().replace(/\D/g,""));}).click(function(){$(this).val($(this).val().replace(/\D/g,"")).unmask();}).blur(function(){if($(this).val().length==11){$(this).mask("999.999.999-99");}else if($(this).val().length==14){$(this).mask("99.999.999/9999-99");}});});</script>';
+			$javascript .= '<script>jQuery(function($){$("#customfield'.$cpfcampo.'").focus(function(){$(this).unmask();$(this).val($(this).val().replace(/\D/g,""));}).click(function(){$(this).val($(this).val().replace(/\D/g,"")).unmask();}).blur(function(){if($(this).val().length==11){$(this).mask("000.000.000-00", {reverse: true});}else if($(this).val().length==14){$(this).mask("00.000.000/0000-00", {reverse: true});}});});</script>';
 			//Valida O CPF
 			$javascript .= '<script type="text/javascript">
 $(document).ready(function() {
@@ -90,11 +90,11 @@ $(document).ready(function() {
 			//Chamando as mascaras
 			$javascript .= '<script type="text/javascript">jQuery(function($){ ';
 			//CPF
-			$javascript .= '$("#customfield'.$cpfcampo.'").mask("999.999.999-99"); ';
+			$javascript .= '$("#customfield'.$cpfcampo.'").mask("000.000.000-00", {reverse: true}); ';
 			//CNPJ
-			$javascript .= '$("#customfield'.$cnpjcampo.'").mask("99.999.999/9999-99"); ';
+			$javascript .= '$("#customfield'.$cnpjcampo.'").mask("00.000.000/0000-00", {reverse: true}); ';
 			//Data de Nascimento
-			$javascript .= '$("#customfield'.$nascimentocampo.'").mask("99/99/9999"); ';
+			$javascript .= '$("#customfield'.$nascimentocampo.'").mask("00/00/0000"); ';
 			//Fechando Jquery das mascaras
 			$javascript .= ' });</script>';
 			//Valida O CPF
