@@ -21,7 +21,7 @@ Lembre-se que caso não queira que o sistema de validação trave na hora do cad
 O Código de consulta e validação para CPF e CNPJ são baseados nos códigos fontes que você poderá conhecer cada código logo a baixo:<br/>
 https://github.com/jansenfelipe/cpf-gratis <br/>
 https://github.com/jansenfelipe/cnpj-gratis <br/>
-https://github.com/digitalBush/jquery.maskedinput <br/>
+http://igorescobar.github.io/jQuery-Mask-Plugin/ <br/>
 https://github.com/tiagoporto/gerador-validador-cpf/ <br/>
 http://www.geradorcnpj.com/javascript-validar-cnpj.htm <br/>
 
