@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.5',
+    'version' => '0.6',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -31,6 +31,8 @@ function valid_account_activate($vars) {
 	        $table->string('cpf');
 	        $table->string('data_nascimento');
 	        $table->string('cnpj');
+	        $table->string('tipoconta');
+	        $table->string('idade');
 	    }
 	);
 
@@ -39,7 +41,7 @@ function valid_account_activate($vars) {
         function ($connectionManager)
         {
             /** @var \Illuminate\Database\Connection $connectionManager */
-            $connectionManager->table('mod_validaccount')->insert(['cpf' => 'nulo','data_nascimento' => 'nulo','cnpj' => 'nulo',]);
+            $connectionManager->table('mod_validaccount')->insert(['cpf' => 'nulo','data_nascimento' => 'nulo','cnpj' => 'nulo','tipoconta' => 'nulo','idade' => '18',]);
         }
     );
 
@@ -89,7 +91,7 @@ $paramscnpj = CnpjGratis::getParams();
     //Salvando informações de configuração
 	if($_GET['config']=='salvar'){
 		try{
-			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],]);
+			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],'tipoconta' => $_POST['tipoconta'],]);
 		    //Sucesso em salvar
 		    echo '<div class="alert alert-success">'.$LANG["alertasalvar"].'</div>';
 		}
@@ -105,6 +107,8 @@ $paramscnpj = CnpjGratis::getParams();
 	    $cpfcampo = $cvallid->cpf;
 	    $nascimentocampo = $cvallid->data_nascimento;
 	    $cnpjcampo = $cvallid->cnpj;
+	    $tipoconta = $cvallid->tipoconta;
+	    $idadesistema = $cvallid->idade;
 	}
 
     //Consultar
@@ -129,7 +133,7 @@ $paramscnpj = CnpjGratis::getParams();
 		    			$cpfcorreto = replacetexto($variaveldousuario[1]);
 		    			$nascimentocorreto = replacetexto($variaveldousuario[2]);
 		    			//Verifica se o campo não é vazio
-		    			if($cpfcorreto=="nulo"){
+		    			if($cpfcorreto==""){
 		    				header('Location: addonmodules.php?module=valid_account&erro=7');
 		    			}
 		    			//Caso não for prossegue
@@ -183,15 +187,10 @@ $paramscnpj = CnpjGratis::getParams();
 		    			//Separando Dados
 		    			$variaveldousuario = explode("|",$usuario);
 			    			//Tratamento dos Campos
-			    			if($cpfcampo==$cnpjcampo){
 			    				$cnpj = replacetexto($variaveldousuario[1]);
-			    			}
-			    			else{
-			    				$cnpj = replacetexto($variaveldousuario[3]);
-			    			}
 		    			
 		    			//Verificando se não é campo vazio
-		    			if($cnpj=="nulo"){
+		    			if($cnpj==""){
 		    				//redireciona caso for vazio
 		    				header('Location: addonmodules.php?module=valid_account&erro=6');
 	    				}
@@ -298,30 +297,43 @@ $paramscnpj = CnpjGratis::getParams();
                 	<?php
                 		$pdo = Capsule::connection()->getPdo();
 						$pdo->beginTransaction();
-						$consultausuariosexistentes = $pdo->prepare("SELECT `a`.`id`,`a`.`firstname`, `a`.`lastname`, `b`.`value` as `cpf`, `c`.`value` as `nascimento`, `d`.`value` as `cnpj` FROM `tblclients` as `a` JOIN `tblcustomfieldsvalues` as `b` ON `b`.`relid` = `a`.`id` JOIN `tblcustomfieldsvalues` as `c` ON `c`.`relid` = `a`.`id` JOIN `tblcustomfieldsvalues` as `d` ON `d`.`relid` = `a`.`id` WHERE `b`.`fieldid` = :campocpf AND `c`.`fieldid` = :camponascimento AND `d`.`fieldid` = :campocnpj order by `a`.`firstname`");
-                		$consultausuariosexistentes->execute(
+						$consulta_pf = $pdo->prepare("SELECT `a`.`id`,`a`.`firstname`, `a`.`lastname`, `b`.`value` as `cpf`, `c`.`value` as `nascimento` FROM `tblclients` as `a` JOIN `tblcustomfieldsvalues` as `b` ON `b`.`relid` = `a`.`id` JOIN `tblcustomfieldsvalues` as `c` ON `c`.`relid` = `a`.`id` WHERE `b`.`fieldid` = :campocpf AND `c`.`fieldid` = :camponascimento order by `a`.`firstname`");
+                		$consulta_pf->execute(
 					        [
 					            ':campocpf' => $cpfcampo,
 					            ':camponascimento' => $nascimentocampo,
-					            ':campocnpj' => $cnpjcampo,
+					            
 					        ]
 					    );
 					    $pdo->commit();
 
-					     foreach ($consultausuariosexistentes as $row) {
+					     foreach ($consulta_pf as $row) {
 					     	$idusuario = $row['id'] . PHP_EOL;
 					     	$primeironome = $row['firstname'] . PHP_EOL;
 					     	$segundonome = $row['lastname'] . PHP_EOL;
 					        $cpfdados = $row['cpf'] . PHP_EOL;
 					        $nascimentodados = $row['nascimento'] . PHP_EOL;
-					        $cnpjdados = $row['cnpj'] . PHP_EOL;
-					        $optionusuarios .= '<option value="'.$idusuario.'|'.$cpfdados.'|'.$nascimentodados.'|'.$cnpjdados.'">'.$primeironome.' '.$segundonome.'</option>';
+					        $option_pf .= '<option value="'.$idusuario.'|'.$cpfdados.'|'.$nascimentodados.'">'.$primeironome.' '.$segundonome.'</option>';
 					    }
 
+					    $pdo->beginTransaction();
+						$consulta_pj = $pdo->prepare("SELECT `a`.`id`,`a`.`firstname`, `a`.`lastname`, `a`.`companyname`, `b`.`value` as `cnpj` FROM `tblclients` as `a` JOIN `tblcustomfieldsvalues` as `b` ON `b`.`relid` = `a`.`id` WHERE `b`.`fieldid` = :campocnpj order by `a`.`firstname`");
+                		$consulta_pj->execute(
+					        [
+					            ':campocnpj' => $cnpjcampo,
+					            
+					        ]
+					    );
+					    $pdo->commit();
 
-                
-					//imprimi os usuários
-					echo $optionusuarios;
+					     foreach ($consulta_pj as $row2) {
+					     	$idusuario = $row2['id'] . PHP_EOL;
+					     	$primeironome = $row2['firstname'] . PHP_EOL;
+					     	$segundonome = $row2['lastname'] . PHP_EOL;
+					     	$nomeempresa = $row2['companyname'] . PHP_EOL;
+					        $cnpjdados = $row2['cnpj'] . PHP_EOL;
+					        $option_pj .= '<option value="'.$idusuario.'|'.$cnpjdados.'">'.$nomeempresa.' ('.$primeironome.' '.$segundonome.')</option>';
+					    }
                 	?>
                 </select>
               </div>
@@ -573,7 +585,7 @@ if($_GET['acao']=='consultar'){
 					    <tbody>
 					      <tr>
 					        <td><?=$LANG["cnpj"];?></td>
-					        <td><? if($cpfcampo==$cnpjcampo){ echo $variaveldousuario[1]; } else{ echo $variaveldousuario[3]; } ?></td>
+					        <td><?=$variaveldousuario[1];?></td>
 					      </tr>
 					      <tr>
 					        <td><?=$LANG["razaosocial"];?></td>
@@ -767,6 +779,9 @@ if($_GET['acao']=='consultar'){
         <a href="http://igorescobar.github.io/jQuery-Mask-Plugin/" target="_new">Jquery Mask Plugin</a><br/>
         <a href="https://github.com/tiagoporto/gerador-validador-cpf/" target="_new">Gerador e Validador de CPF</a></br>
         <a href="http://www.geradorcnpj.com/javascript-validar-cnpj.htm" target="_new">Validação de CNPJ por geradorcnpj.com</a><br/>
+        <a href="http://www.geradorcpf.com/script-validar-cpf-php.htm" target="_new">Gerador de CPF (Validação de CPF por php)</a><br/>
+        <a href="http://www.geradorcpf.com/script-validar-cpf-php.htm" target="_new">Gerador de CPF (Validação de CPF por php)</a><br/>
+        <a href="https://www.todoespacoonline.com/w/2014/08/validar-cnpj-com-php/" target="_new">Todo Espaco Online (Validação de CNPJ por php)</a><br/>
       	<br/>
 
         <?=$LANG['explicacaocredito'];?></p>
@@ -870,6 +885,41 @@ if($_GET['acao']=='consultar'){
                 </select>
 			  </div>
 			</div>
+			<!--Tipo de Conta Campo Customizado-->
+			<div class="panel panel-default">
+			  <div class="panel-heading"><?=$LANG['selecione-campo'];?> <b><?=$LANG["tipoconta"];?></b></div>
+			  <div class="panel-body">
+			    <select name="tipoconta" id="tipoconta" class="form-control">
+			    	<?php
+			    	$tipoconta_campo = '';
+			    	//Pegando informações da tabela do módulo.
+					/** @var stdClass $customfields */
+					foreach (Capsule::table('tblcustomfields')->get() as $customfields) {
+					    $idfields = $customfields->id;
+					    $namefields = $customfields->fieldname;
+						  	if($idfields==$tipoconta){
+					            $tipoconta_campo .= '<option value="'.$idfields.'" selected="selected">'.$namefields.'</option>';
+					        } 
+					        else{
+					            $tipoconta_campo .= '<option value="'.$idfields.'">'.$namefields.'</option>';
+					        }
+					}
+					
+					//imprime os resultados
+					echo $tipoconta_campo;			   
+			    	?>
+                </select>
+			  </div>
+			</div>
+			<!--Idade permitida-->
+			<div class="panel panel-default">
+			  <div class="panel-heading"><?=$LANG["idademinima"];?></div>
+			  <div class="panel-body">
+			  	<div class="form-group">
+                    <input name="idade" type="number" class="form-control" value="<?=$idadesistema;?>" />
+                </div>
+			  </div>
+			</div>
 	      </div>
 	      <div class="modal-footer">
 	        <input type="submit" class="btn btn-success" value="Salvar">
@@ -899,15 +949,33 @@ function mudarbuscaavulsa(){
 	if($("#tipo").val() != "cpf" || $("#formabusca").val() != "avulso"){
 		$("#avulsofisico").hide();
 		$("#avulsojuridico").show();
+		$('#usuarioscadastrados').empty();
+		$("#usuarioscadastrados").append('<option value="1">Arroz</option>');
   	}
  	else{
    		$("#avulsofisico").show();
    		$("#avulsojuridico").hide();
+   		$('#usuarioscadastrados').empty();
+   		$("#usuarioscadastrados").append('<option value="2">Feijão</option>');
   	}
 }
  	$("#formabusca").change(function(){mudarbuscaavulsa();});
  	$("#tipo").change(function(){mudarbuscaavulsa();});
  	mudarbuscaavulsa();
+
+function mudarconsulta(){
+	if($("#tipo").val() === "cpf"){
+		$('#usuarioscadastrados').empty();
+		$("#usuarioscadastrados").append('<?=str_replace("\n", "", $option_pf);?>');
+  	}
+ 	else{
+   		$('#usuarioscadastrados').empty();
+   		$("#usuarioscadastrados").append('<?=str_replace("\n", "", $option_pj);?>');
+  	}
+}
+ 	$("#tipo").change(function(){mudarconsulta();});
+ 	mudarconsulta();
+
 
 //Formatação de Docuemnto
 jQuery(function($){

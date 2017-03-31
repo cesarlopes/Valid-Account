@@ -70,4 +70,5 @@ $_ADDONLANG['alerta7'] = "<strong>Alerta:</strong> Não foi possivel concluir a 
 $_ADDONLANG['alertaconsultar'] = "<strong>Alerta:</strong> Sua consulta foi efetuada com sucesso! Confira os dados da consulta logo a baixo.";
 $_ADDONLANG['alertasalvar'] = "<strong>Alerta:</strong> Suas informações foram salvas com sucesso.";
 $_ADDONLANG['alertasalvarerro'] = "<strong>Alerta:</strong> Não foi possível salvar suas informações, erro:";
+$_ADDONLANG['idademinima'] = "Digite a Idade Mínima para cadastro";
 ?>
