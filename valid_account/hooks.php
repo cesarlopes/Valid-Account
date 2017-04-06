@@ -20,6 +20,7 @@ if (!defined("WHMCS"))
 		    $nascimentocampo = $cvallid->data_nascimento;
 		    $cnpjcampo = $cvallid->cnpj;
 		    $tipoconta = $cvallid->tipoconta;
+		    $juridicocpf = $cvallid->juridicocpf;
 		}
 		//Verifica se é obrigatório o campo de CPF
 		foreach (Capsule::table('tblcustomfields')->WHERE('id', $cpfcampo)->get() as $customfieldsrequirecpf){
@@ -175,10 +176,16 @@ $(document).ready(function() {
 				$javascript .= '$("#companyname").prop("required",true);';
 			}
 			else{
-				$javascript .= '$("#customfield'.$cpfcampo.'").prop("disabled", true);';
+				if($juridicocpf=='1'){
+					$javascript .= '$("#customfield'.$cpfcampo.'").prop("disabled", false);';
+					$javascript .= '$("#customfield'.$cpfcampo.'").prop("required",true);';
+				}
+				else{
+					$javascript .= '$("#customfield'.$cpfcampo.'").prop("disabled", true);';
+					$javascript .= '$("#customfield'.$cpfcampo.'").prop("required",false);';
+				}
 				$javascript .= '$("#customfield'.$cnpjcampo.'").prop("disabled", false);';
 				$javascript .= '$("#customfield'.$cnpjcampo.'").prop("required",true);';
-				$javascript .= '$("#customfield'.$cpfcampo.'").prop("required",false);';
 				$javascript .= '$("#companyname").prop("required",true);';
 			}
 		$javascript .= '

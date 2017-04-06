@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.6',
+    'version' => '0.7',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -33,6 +33,7 @@ function valid_account_activate($vars) {
 	        $table->string('cnpj');
 	        $table->string('tipoconta');
 	        $table->string('idade');
+	        $table->string('juridicocpf');
 	    }
 	);
 
@@ -41,7 +42,7 @@ function valid_account_activate($vars) {
         function ($connectionManager)
         {
             /** @var \Illuminate\Database\Connection $connectionManager */
-            $connectionManager->table('mod_validaccount')->insert(['cpf' => 'nulo','data_nascimento' => 'nulo','cnpj' => 'nulo','tipoconta' => 'nulo','idade' => '18',]);
+            $connectionManager->table('mod_validaccount')->insert(['cpf' => 'nulo','data_nascimento' => 'nulo','cnpj' => 'nulo','tipoconta' => 'nulo','idade' => '18','juridicocpf' => '1',]);
         }
     );
 
@@ -91,7 +92,7 @@ $paramscnpj = CnpjGratis::getParams();
     //Salvando informações de configuração
 	if($_GET['config']=='salvar'){
 		try{
-			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],'tipoconta' => $_POST['tipoconta'],]);
+			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],'tipoconta' => $_POST['tipoconta'],'juridicocpf' => $_POST['juridicocpf'],]);
 		    //Sucesso em salvar
 		    echo '<div class="alert alert-success">'.$LANG["alertasalvar"].'</div>';
 		}
@@ -109,6 +110,7 @@ $paramscnpj = CnpjGratis::getParams();
 	    $cnpjcampo = $cvallid->cnpj;
 	    $tipoconta = $cvallid->tipoconta;
 	    $idadesistema = $cvallid->idade;
+	    $juridicocpf = $cvallid->juridicocpf;
 	}
 
     //Consultar
@@ -779,9 +781,6 @@ if($_GET['acao']=='consultar'){
         <a href="http://igorescobar.github.io/jQuery-Mask-Plugin/" target="_new">Jquery Mask Plugin</a><br/>
         <a href="https://github.com/tiagoporto/gerador-validador-cpf/" target="_new">Gerador e Validador de CPF</a></br>
         <a href="http://www.geradorcnpj.com/javascript-validar-cnpj.htm" target="_new">Validação de CNPJ por geradorcnpj.com</a><br/>
-        <a href="http://www.geradorcpf.com/script-validar-cpf-php.htm" target="_new">Gerador de CPF (Validação de CPF por php)</a><br/>
-        <a href="http://www.geradorcpf.com/script-validar-cpf-php.htm" target="_new">Gerador de CPF (Validação de CPF por php)</a><br/>
-        <a href="https://www.todoespacoonline.com/w/2014/08/validar-cnpj-com-php/" target="_new">Todo Espaco Online (Validação de CNPJ por php)</a><br/>
       	<br/>
 
         <?=$LANG['explicacaocredito'];?></p>
@@ -882,6 +881,16 @@ if($_GET['acao']=='consultar'){
 					//imprime os resultados
 					echo $cnpj_campo;			   
 			    	?>
+                </select>
+			  </div>
+			</div>
+			<!--CPF Válido para Pessoa Jurídica-->
+			<div class="panel panel-default">
+			  <div class="panel-heading"><?=$LANG["juridicocpf"];?></div>
+			  <div class="panel-body">
+			    <select name="juridicocpf" id="juridicocpf" class="form-control">
+					<option value="1" <? if($juridicocpf=='1'){ echo 'selected="selected"'; }?>><?=$LANG["sim"];?></option>
+					<option value="2" <? if($juridicocpf=='2'){ echo 'selected="selected"'; }?>><?=$LANG["nao"];?></option>		    	
                 </select>
 			  </div>
 			</div>
