@@ -10,7 +10,7 @@ O Módulo tem de proposito integrar um sistema de verificação de CPF ou CNPJ c
 # Como instalar
 Para começar você deve ter 3 campos para validação:
 - Tipo de Conta
-  - Selecione o modo lista de opções e coloque as seguintes opções: Pessoa Física, Pessoa Jurídica
+  - Selecione o modo lista de opções e coloque as seguintes opções: Pessoa Física,Pessoa Jurídica
 - CPF <br/>
 - Data de Nascimento <br/>
 - CNPJ <br/>
