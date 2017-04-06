@@ -378,50 +378,46 @@ $(document).ready(function() {
 				//valida o CNPJ
 				if(CNPJ($cnpj)==true){
 					//Consulta se o CPF já não é cadastrado no sistema
-					$existente = Capsule::table('tblcustomfieldsvalues')->WHERE('fieldid', $cnpjcampo)->WHERE('value', $cnpj)->count();
+					$existentecnpj = Capsule::table('tblcustomfieldsvalues')->WHERE('fieldid', $cnpjcampo)->WHERE('value', $cnpj)->count();
 					//Verifica se existe algum cadastro com o CPF
-					if($existente=='0'){
-						//Verifica se é obrigatório o CPF na conta PJ
-						if($juridicocpf=='1'){
-							//valida o CPF
-							if( CPF($cpf) ){
-								//Consulta se o CPF já não é cadastrado no sistema
-								$existente = Capsule::table('tblcustomfieldsvalues')->WHERE('fieldid', $cpfcampo)->WHERE('value', $cpf)->count();
-								//Verifica se existe algum cadastro com o CPF
-								if($existente=='0'){
-									//Verificando a data de nascimento se é uma data permitida
-									if(idade($nascimento)>=$idadesistema){
-										//Silêncio
+					if($existentecnpj=='0'){
+						//Verifica se não é campo unico
+						if($cpfcampo==$cnpjcampo){}
+						else{
+							//Verifica se é obrigatório o CPF na conta PJ
+							if($juridicocpf=='1'){
+								//valida o CPF
+								if( CPF($cpf) ){
+									//Consulta se o CPF já não é cadastrado no sistema
+									$existentecpf = Capsule::table('tblcustomfieldsvalues')->WHERE('fieldid', $cpfcampo)->WHERE('value', $cpf)->count();
+									//Verifica se existe algum cadastro com o CPF
+									if($existentecpf=='0'){
+										//Verificando a data de nascimento se é uma data permitida
+										if(idade($nascimento)>=$idadesistema){
+											//Silêncio
+										}
+										//Caso não for retorna o erro
+										else{
+											$erro = "Desculpe, mas não é permitido cadastros com idade inferior a ".$idadesistema." anos.";
+											return $erro;
+										}
 									}
-									//Caso não for retorna o erro
+									//Caso tiver conta existente para o CPF ele notifica e retorna ao cadastro
 									else{
-										$erro = "Desculpe, mas não é permitido cadastros com idade inferior a ".$idadesistema." anos.";
+										$erro = "O CPF informado já existe conta associada, entre em contato para maiores informações";
 										return $erro;
 									}
 								}
-								//Caso tiver conta existente para o CPF ele notifica e retorna ao cadastro
 								else{
-									$erro = "O CPF informado já existe conta associada, entre em contato para maiores informações";
+									//trava o cadastro e retorna como CPF inválido
+									$erro = "O CPF informado é inválido!";
 									return $erro;
 								}
-							}
-							else{
-								//trava o cadastro e retorna como CPF inválido
-								$erro = "O CPF informado é inválido!";
-								return $erro;
-							}
 
-						}
-						//continua sem retorno
-						else{
-							//Verificando a data de nascimento se é uma data permitida
-							if(idade($nascimento)>=$idadesistema){
-								//Silêncio
 							}
-							//Caso não for retorna o erro
+							//continua sem retorno
 							else{
-								$erro = "Desculpe, mas não é permitido cadastros com idade inferior a ".$idadesistema." anos.";
-								return $erro;
+								//Silêncio
 							}
 						}
 						
