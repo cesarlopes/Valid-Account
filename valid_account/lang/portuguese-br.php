@@ -71,4 +71,7 @@ $_ADDONLANG['alertaconsultar'] = "<strong>Alerta:</strong> Sua consulta foi efet
 $_ADDONLANG['alertasalvar'] = "<strong>Alerta:</strong> Suas informações foram salvas com sucesso.";
 $_ADDONLANG['alertasalvarerro'] = "<strong>Alerta:</strong> Não foi possível salvar suas informações, erro:";
 $_ADDONLANG['idademinima'] = "Digite a Idade Mínima para cadastro";
+$_ADDONLANG['juridicocpf'] = "Você deseja tornar obrigatório o campo de CPF para Pessoa Jurídica?";
+$_ADDONLANG['sim'] = "Sim";
+$_ADDONLANG['nao'] = "Não";
 ?>
