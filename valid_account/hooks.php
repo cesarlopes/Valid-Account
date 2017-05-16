@@ -225,6 +225,7 @@ $(document).ready(function() {
 		    $cnpjcampo = $cvallid->cnpj;
 		    $tipoconta = $cvallid->tipoconta;
 		    $idadesistema = $cvallid->idade;
+		    $idadesistemamaxima = $cvallid->idademaxima;
 		    $juridicocpf = $cvallid->juridicocpf;
 		}
 		//recebendo os dados do custom fields
@@ -240,7 +241,7 @@ $(document).ready(function() {
 		        return false;
 		    }
 		    // Elimina possivel mascara
-		    $ncpf = ereg_replace('[^0-9]', '', $ncpf);
+		    $ncpf = preg_replace("/\D+/","",$ncpf);
 		    $ncpf = str_pad($ncpf, 11, '0', STR_PAD_LEFT);
 		    // Verifica se o numero de digitos informados é igual a 11 
 		    if (strlen($ncpf) != 11) {
@@ -353,7 +354,15 @@ $(document).ready(function() {
 					if($existente=='0'){
 						//Verificando a data de nascimento se é uma data permitida
 						if(idade($nascimento)>=$idadesistema){
-							//Silêncio
+							//Verifica a idade máxima agora
+							if(idade($nascimento)<=$idadesistemamaxima){
+							    //Silêncio
+						    }
+						    //Caso for maior a idade do que permitido ele retorna o erro
+						    else{
+						        $erro = "Desculpe, mas não é permitido cadastros com idade superior a ".$idadesistemamaxima." anos.";
+							    return $erro;
+						    }
 						}
 						//Caso não for retorna o erro
 						else{

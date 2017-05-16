@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.7',
+    'version' => '0.8',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -33,6 +33,7 @@ function valid_account_activate($vars) {
 	        $table->string('cnpj');
 	        $table->string('tipoconta');
 	        $table->string('idade');
+	        $table->string('idademaxima');
 	        $table->string('juridicocpf');
 	    }
 	);
@@ -42,7 +43,7 @@ function valid_account_activate($vars) {
         function ($connectionManager)
         {
             /** @var \Illuminate\Database\Connection $connectionManager */
-            $connectionManager->table('mod_validaccount')->insert(['cpf' => 'nulo','data_nascimento' => 'nulo','cnpj' => 'nulo','tipoconta' => 'nulo','idade' => '18','juridicocpf' => '1',]);
+            $connectionManager->table('mod_validaccount')->insert(['cpf' => 'nulo','data_nascimento' => 'nulo','cnpj' => 'nulo','tipoconta' => 'nulo','idade' => '18','idademaxima' => '100','juridicocpf' => '1',]);
         }
     );
 
@@ -92,7 +93,7 @@ $paramscnpj = CnpjGratis::getParams();
     //Salvando informações de configuração
 	if($_GET['config']=='salvar'){
 		try{
-			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],'tipoconta' => $_POST['tipoconta'],'juridicocpf' => $_POST['juridicocpf'],]);
+			$updatedUserCount = Capsule::table('mod_validaccount')->update(['cpf' => $_POST['cpf'],'data_nascimento' => $_POST['data-nascimento'],'cnpj' => $_POST['cnpj'],'tipoconta' => $_POST['tipoconta'],'juridicocpf' => $_POST['juridicocpf'],'idade' => $_POST['idade'],'idademaxima' => $_POST['idademaxima'],]);
 		    //Sucesso em salvar
 		    echo '<div class="alert alert-success">'.$LANG["alertasalvar"].'</div>';
 		}
@@ -110,6 +111,7 @@ $paramscnpj = CnpjGratis::getParams();
 	    $cnpjcampo = $cvallid->cnpj;
 	    $tipoconta = $cvallid->tipoconta;
 	    $idadesistema = $cvallid->idade;
+	    $idadesistemamaxima = $cvallid->idademaxima;
 	    $juridicocpf = $cvallid->juridicocpf;
 	}
 
@@ -926,6 +928,15 @@ if($_GET['acao']=='consultar'){
 			  <div class="panel-body">
 			  	<div class="form-group">
                     <input name="idade" type="number" class="form-control" value="<?=$idadesistema;?>" />
+                </div>
+			  </div>
+			</div>
+			<!--Idade máxima permitida-->
+			<div class="panel panel-default">
+			  <div class="panel-heading"><?=$LANG["idademaxima"];?></div>
+			  <div class="panel-body">
+			  	<div class="form-group">
+                    <input name="idademaxima" type="number" class="form-control" value="<?=$idadesistemamaxima;?>" />
                 </div>
 			  </div>
 			</div>
