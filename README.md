@@ -6,6 +6,7 @@ O Módulo tem de proposito integrar um sistema de verificação de CPF ou CNPJ c
 - PHP 5.6 ou maior
 - WHMCS 7.x ou superior
 - PDO e Mysqli ativos
+- Habilitado no PHP o short_open_tag
 
 # Como instalar
 Para começar você deve ter 3 campos para validação:
