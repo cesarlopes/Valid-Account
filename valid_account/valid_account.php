@@ -12,7 +12,7 @@ function valid_account_config() {
     $configarray = array(
     'name' => 'Valid Account',
     'description' => 'Sistema de validação de cadastro baseado em CPF/CNPJ.',
-    'version' => '0.8',
+    'version' => '0.9',
     'language' => 'portuguese-br',
     'author' => 'WHMCS.RED',
     );
@@ -413,15 +413,14 @@ $paramscnpj = CnpjGratis::getParams();
                 <div class="panel-heading"><i class="fa fa-wrench" aria-hidden="true"></i> <?=$LANG['atualizacao'];?></div>
                 <div class="panel-body">
                     <?php
-                    $versao = $vars['version'];
-		              $versaodisponivel = file_get_contents("http://whmcs.red/versao/validaccount.txt");
+                      $versao = $vars['version'];
+		              $versaodisponivel = file_get_contents("https://versao.whmcs.red/validaccount.txt");
 		              if($versao==$versaodisponivel){
-		                echo '<center><i class="fa fa-check-circle-o" aria-hidden="true"></i> '.$LANG["sucatualizacao"].'</center>';
+		                  echo '<center><i class="fa fa-check-circle-o" aria-hidden="true"></i> '.$LANG["sucatualizacao"].'</center>';
 		              }
 		              else{
-		                echo '<center><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> '.$LANG["erroatualizacao"].'<br/><a href="http://www.whmcs.red" class="btn btn-danger"><i class="fa fa-download" aria-hidden="true"></i> '.$LANG["baixar"].'</a></center>';
+		                  echo '<center><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> '.$LANG["erroatualizacao"].'<br/><a href="http://www.whmcs.red" class="btn btn-danger"><i class="fa fa-download" aria-hidden="true"></i> '.$LANG["baixar"].'</a></center>';
 		              }
-
                     ?>
                 </div>
             </div>

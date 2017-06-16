@@ -24,26 +24,6 @@ class CpfGratis {
         $client->getClient()->setDefaultOption('config/curl/'.CURLOPT_SSL_VERIFYHOST, false);
         $client->getClient()->setDefaultOption('config/curl/'.CURLOPT_SSLVERSION, 3);
 
-        //URL RECEITA
-        $receitaurlcpf = 'https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/captcha/gerarCaptcha.asp';
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $receitaurlcpf);
-            curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)");
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,false);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER,false);
-            curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
-            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 20);
-            $rt = curl_exec($curl);
-            $informacao = curl_getinfo($curl);
-            if($informacao["http_code"]=='200'){}
-            else{
-                echo '<br/><center><font face="arial" color="red"><b>VALID ACCOUNT INFORMA:</b></font><br/><font face="Arial"><h1>Desculpe, mas o site da Receita não encontra-se online, tente novamente mais tarde!</h1><br/><a href="http://'.$_SERVER["HTTP_HOST"].'"><b>[VOLTAR AO PAINEL DE ADMINISTRAÇÃO]</b></a></font></center>';
-                exit;
-            }
-        
-        
         $client->request('GET', 'https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/captcha/gerarCaptcha.asp');
         
         $internal_cookies = $client->getCookieJar()->all()[0];
